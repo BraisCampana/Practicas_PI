@@ -1,0 +1,18 @@
+{% extends "/workspace/spotific/home/templates/home/base.html" %} {%block content%}
+<div class="container">
+	<BR>
+	<!-- SpotiFIC login image -->
+	<div class="image">
+		<img src="../images/icone-spotify-noir.png" alt="SpotiFIC login image" width="250" height="250" class="center">
+	</div>
+	<BR>
+    <p style="color:#860000">{{registerError}}</p>
+    <BR>
+	<div class="container">
+        <!-- Trigger the modal with a button -->
+        <div class="tab-pane" id="signupTab">
+            <p>{%load crispy_forms_tags %} {%crispy signup_form signup_form.helper %}</p>      
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<BR><BR>
+<div class="image">
+    {% if profile.url_image %} <img src="{{profile.url_image}}" alt="El artista no tiene imagen customizada" width="300" height="300" style="float:right;">
+    {% else %} <img src="../images/user-default-image.png" alt="El artista no tiene imagen por defecto" width="300" height="300" style="float:right;">
+    {% endif %}
+</div>
+<div class="track-details">
+    <h1>
+        {% if request.user.username %} <b>{{request.user.username}}</b>
+        {% else %} <a style="color:#ca0a0a">El usuario no tiene un nombre definido.</a>
+        {% endif %}
+    </h1>
+    <BR>
+    <h6>
+        {% if request.user.email %} Email: <a style="color: #004c99">{{request.user.email}}</a>
+        {% else %} <a style="color:#ca0a0a">El usuario no tiene email.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if profile.country %} País: <a style="color: #004c99">{{profile.country}}</a>
+        {% else %} <a style="color:#ca0a0a">El usuario no tiene un país especificado.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if profile.twitter_followers %} Nº Seguidores en Twitter: <a style="color: #004c99">{{profile.twitter_followers}}</a>
+        {% else %} <a style="color:#ca0a0a">La cuenta no tiene seguidores en twitter.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if profile.spotify_followers %} Nº Seguidores en Spotify: <a style="color: #004c99">{{profile.spotify_followers}}</a>
+        {% else %} <a style="color:#ca0a0a">La cuenta no tiene seguidores en spotify.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if profile.spotify_category %} Categoría de Spotify: <a style="color: #004c99">{{profile.spotify_category}}</a>
+        {% else %} <a style="color:#ca0a0a">La cuenta no tiene categoría.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if profile.twitter_verification %} <a style="color: #004c99">La cuenta de Twitter que usa este usuario está verificada. </a>
+        {% else %} <a style="color:#ca0a0a">La cuenta de Twitter que usa este usuario no está verificada.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <form id="profile-form-post" action="" method="POST" autocomplete="off">
+        {% csrf_token %} <input type="submit" name="logout" class="button" tabindex= "0" value="Cerrar sesión">
+    </form>
+    <BR>
+</div>
+{% endif %}
+{% endblock %}

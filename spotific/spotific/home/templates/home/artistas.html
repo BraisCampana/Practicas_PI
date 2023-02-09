@@ -1,0 +1,71 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<BR><BR>
+<div class="artist-image">
+    {% if artist.url_image %} <img src={{artist.url_image}} alt="El artista no tiene imagen customizada" width="300" height="300" style="float:right;">
+    {% else %} <img src="../../images/user-default-image.png" alt="El artista no tiene imagen por defecto" width="300" height="300" style="float:right;">
+    {% endif %}
+</div>
+<div class="artist-details">
+    <h1>
+        {% if artist.name %} <b>{{artist.name}}</b>
+        {% else %} <a style="color:#ca0a0a">No tiene un nombre completo.</a>
+        {% endif %}
+    </h1>
+    <BR>
+    <h4>
+        {% if artist.followers != '0' %} Nº de seguidores: <a style="color: #004c99">{{artist.followers}}</a>
+        {% else %} <a style="color:#ca0a0a">No tiene followers.</a>
+        {% endif %}
+    </h4>
+    <BR>
+    <h6>
+        {% if artist.genres %} Géneros: <a style="color: #004c99">{{artist.genres}}</a>
+        {% else %} <a style="color:#ca0a0a">No tiene géneros especificados.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if artist.popularity != 0 %} Popularidad: <a style="color: #004c99">{{artist.popularity}} / 100</a>
+        {% else %} <a style="color:#ca0a0a">No tiene popularidad.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <div class="graphic-pubs-years">
+        <h6>Gráfica comparando Nº álbumes publicados / Años:</h6>
+        <img src="../../images/myplot.png" alt="El artista especificado no tiene álbumes publicados" width="560" height="400" style="color:#ca0a0a">
+    </div>
+    <BR>
+    <form id="twittear-form-post" action="" method="POST" autocomplete="off">
+        {% csrf_token %}
+        {% if not wiki %} <input type="submit" name="twittear" class="button" tabindex= "0" value="Más información">
+        {% else %} 
+            <a style="color: #004c99">Más información: </a>
+            <BR>
+            <a>{{wiki}}</a>
+        {% endif %}
+        <BR><BR>
+        {% if not message %}<input type="submit" name="twittear" class="button" tabindex= "0" value="Twittear mi actividad">
+        {% elif message == 'Has twitteado tu actividad correctamente.' %} <a style="color: #004c99">{{message}}</a>
+        {% else %} <a style="color: #ca0a0a">No ha sido posible twittear tu actividad: {{message}}</a>
+        {% endif %}
+        <BR><BR> 
+        {% if not tweet %} <input type="submit" name="twittear" class="button" tabindex= "0" value="Ver actividad">  
+        {% else %}
+            {% if not tweet.error %}
+            <h6 style="color: #004c99">Último tweet destacado sobre el artista:</h6>
+            <div class="tweet">
+                <blockquote class="twitter-tweet"><p lang="es" dir="ltr">{{tweet.text}}</p>&mdash; {{tweet.name}} (@{{tweet.id_name}})
+                    <a href="https://twitter.com/{{tweet.id_name}}/status/{{tweet.id}}">{{tweet.date}}</a>
+                </blockquote>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            {% else %} <h6 style="color: #ca0a0a">No se pudo obtener el tweet por el error: {{tweet.error}}</h6>
+            {% endif %}
+        {% endif %}
+    </form>
+    <BR>
+</div>
+
+{% endblock %}

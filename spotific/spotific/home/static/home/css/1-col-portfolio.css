@@ -1,0 +1,94 @@
+/*
+ * Start Bootstrap - 1 Col Portfolio (https://startbootstrap.com/template-overviews/1-col-portfolio)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-1-col-portfolio/blob/master/LICENSE)
+ */
+
+ body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.pagination {
+  margin-bottom: 15px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tabSpace {
+  margin-left: auto;
+}
+
+.bg-dark {
+  background-color: #065124 !important;
+}
+
+.table {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100% ;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #065124;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+.form-inline {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+label {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #065124;
+  border-color: #065124;
+}
+
+.button {
+  border: none;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 5px;
+  font-size: 17px;
+  padding: 6px 18px;
+}
+
+.button:hover {
+  color: white;
+  background-color: #065124;
+  box-shadow: none;
+}

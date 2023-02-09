@@ -1,0 +1,78 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<BR><BR>
+<div class="album-image">
+    {% if album.url_image %}<img src={{album.url_image}} alt="El artista no tiene imagen customizada" width="300" height="300" style="float:right;">
+    {% else %} <img src="../../images/user-default-image.png" alt="El artista no tiene imagen por defecto" width="300" height="300" style="float:right;">
+    {% endif %}
+</div>
+<div class="album-details">
+    <h1>
+        {% if album.name %} <b>{{album.name}}</b>
+        {% else %} <a style="color:#ca0a0a">No tiene un nombre completo.</a>
+        {% endif %}
+    </h1>
+    <BR>
+    <h4>
+        {% if album.total_tracks != '0' %} Nº canciones: <a style="color: #004c99">{{album.total_tracks}}</a>
+        {% else %} <a style="color:#ca0a0a">Este album no tiene canciones.</a>
+        {% endif %}
+    </h4>
+    <BR>
+    <h4>
+        {% if album.duration != '0:00:00' %} Duración: <a style="color: #004c99">{{album.duration}}</a>
+        {% else %} <a style="color:#ca0a0a">No tiene duración.</a>
+        {% endif %}
+    </h4>
+    <BR>
+    <h6>
+        {% if album.artists %} Artistas: <a style="color: #004c99">{{album.artists}}</a>
+        {% else %} <a style="color:#ca0a0a">No tiene artistas asociados.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if album.release_date %} Fecha de salida: <a style="color: #004c99">{{album.release_date}}</a>
+        {% else %} <a style="color:#ca0a0a">No tiene fecha de salida.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <h6>
+        {% if album.popularity != '0' %} Media de popularidad del álbum: <a style="color: #004c99">{{album.popularity}} / 100</a>
+        {% else %} <a style="color:#ca0a0a">No tiene popularidad.</a>
+        {% endif %}
+    </h6>
+    <BR>
+    <form id="twittear-form-post" action="" method="POST" autocomplete="off">
+        {% if not message %} {% csrf_token %} <input type="submit" name="twittear" class="button" tabindex= "0" value="Twittear mi actividad">
+        {% elif message == 'Has twitteado tu actividad correctamente.' %} <a style="color: #004c99">{{message}}</a>
+        {% else %} <a style="color: #ca0a0a">No ha sido posible twittear tu actividad: {{message}}</a>
+        {% endif %}
+    </form>
+    <BR>
+    <table id="table-songs-album" class="table" style="font-family:Arial">
+        {% if album.tracks %}
+            <h6>Lista de canciones del álbum:</h6>
+            <BR>
+            <tr><th>Canción</th><th>Artista/s</th></tr>
+            {% for track in album.tracks %}
+            <tr class="clickable-row" data-href="../../Canciones/{{track.id}}" name="row-song">
+                <td>{{track.name}}</td>
+                <td>{{track.artists}}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <h6><a style="color:#ca0a0a">El album no tiene canciones.</a></h6>
+        {% endif %}
+    </table>
+    <script>
+        jQuery(document).ready(function($){
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+    <BR>
+</div>
+{% endblock %}

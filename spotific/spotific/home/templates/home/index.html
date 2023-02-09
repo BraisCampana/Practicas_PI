@@ -1,0 +1,70 @@
+{% extends "/workspace/spotific/home/templates/home/base.html" %} {%block content%}
+<!-- SpotiFIC login image -->
+<div class="image">
+	<img src="../images/icone-spotify-noir.png" alt="SpotiFIC login image" width="250" height="250" class="center">
+</div>
+<BR><BR>
+{% if request.user.is_authenticated %}
+<div class="container">
+	<div class="search-songs">
+		<form id="search-songs-formpost" action="" method="POST" autocomplete="off">
+			<div style="text-align:center;">
+				<a>Seleccione el tipo de búsqueda:</a>
+				{% csrf_token %}
+				<select id="selItem" name="selItem" class="select">
+					<option value="Canciones" {% if selection == "Canciones" %} selected {% endif %}>Canciones</option>
+					<option value="Artistas" {% if selection == "Artistas" %} selected {% endif %}>Artistas</option>
+					<option value="Albums" {% if selection == "Albums" %} selected {% endif %}>Albums</option>
+				</select>
+				<br><br>
+			</div>
+			<div style="text-align:center;">
+				<input type="text" name="song-formpost" tabindex= "0" required>
+				<input type="hidden" name="selection" value=selItem>
+				<input type="submit" tabindex= "0" value="Buscar">
+				<br><br>   
+			</div>
+		</form>
+		<div class="row-search-songs">
+			<table id="table-songs" class="table" style="font-family:Arial">
+				{% if finaltracks.info %}
+					{% if selection == "Canciones" %}<tr><th>Canción</th><th>Artista/s</th></tr>{% endif %}
+					{% if selection == "Artistas" %}<tr><th>Artista</th><th>Nº Seguidores</th></tr>{% endif %}
+					{% if selection == "Albums" %}<tr><th>Álbum</th><th>Artista/s</th></tr>{% endif %}
+					{% for info in finaltracks.info %}
+					<tr class="clickable-row" data-href="{{selection}}/{{info.id}}" name="row-song">
+						<td>{{info.name}}</td>
+						<td>{{info.values}}</td>
+					</tr>
+					{% endfor %}
+				{% else %}
+					<div style="text-align:center;">
+						{% if selection == "Canciones" %}No existen canciones con ese nombre.{% endif %}
+						{% if selection == "Artistas" %}No existen artistas con ese nombre.{% endif %}
+						{% if selection == "Albums" %}No existen álbums con ese nombre.{% endif %}
+					</div>
+				{% endif %}
+			</table>
+			<script>
+				jQuery(document).ready(function($){
+					$(".clickable-row").click(function() {
+						window.location = $(this).data("href");
+					});
+				});
+			</script>
+		</div>
+	</div>
+</div>
+<BR> {%else%}
+<div class="container">
+	{% csrf_token %}
+	<!-- Trigger the modal with a button -->
+	<div class="tab-content">
+		<div class="tab-pane active" id="loginTab">
+			<p>{%load crispy_forms_tags %} {%crispy login_form login_form.helper %}</p>
+			<p style="color:#ca0a0a">{{loginError}}</p>
+			<p>No estás registrado en la aplicación? <a href="register/">Regístrate aquí</a> </p>		
+		</div>
+	</div>
+</div>
+<BR> {%endif%} {% endblock %}
